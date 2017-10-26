@@ -33,7 +33,14 @@ public class OAuth2ServerConfig {
                     .authorizedGrantTypes("password", "refresh_token")
                     .scopes("select")
                     .authorities("client")
-                    .secret("123456");
+                    .secret("123456")
+                    .and()
+                    .withClient("client_2")
+                    .secret("123456")
+                    .authorizedGrantTypes("authorization_code")
+                    .scopes("user_info")
+                    .autoApprove(true);
+                  
         }
         @Override
       
@@ -43,11 +50,6 @@ public class OAuth2ServerConfig {
                     .authenticationManager(authenticationManager);
                      
         }
-//        @Override
-//        public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-//            //允许表单认证
-//            oauthServer.allowFormAuthenticationForClients();
-//        }
         @Override
         public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
             security
