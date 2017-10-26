@@ -1,0 +1,41 @@
+<html>
+<head>
+ <script src="http://cdn.static.runoob.com/libs/jquery/1.8.3/jquery.js"></script>    
+</head>
+<body>
+<div id="divCustomers"></div>
+<button id="button" onclick="myFunction()">asdfasdf</button>
+
+<script>
+/*<![CDATA[*/
+
+function html_decode(str) {
+    var s = "";
+    if (str.length == 0)
+        return "";
+    s = str.replace(/&gt;/g, "&");
+    s = s.replace(/&lt;/g, "<");
+    s = s.replace(/&gt;/g, ">");
+    s = s.replace(/&nbsp;/g, " ");
+    s = s.replace(/&#39;/g, "\'");
+    s = s.replace(/&quot;/g, "\"");
+    s = s.replace(/<br>/g, "\n");
+    s = s.replace(/&/g, ">");  
+    s = s.replace("textarea", "div"); 
+    return s;
+}
+function myFunction(){
+	   $.getJSON("http://192.168.2.80:3000/getnews/id/59ae5479665bd60b38c4c913", function(data) {
+	    
+		  
+		   $("#divCustomers").html(html_decode(data.content));
+		});
+}
+
+
+
+/*]]>*/
+</script>
+</body>
+
+</html>
