@@ -1,6 +1,7 @@
 package com.karson.webmagic.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
  
 
@@ -38,7 +40,7 @@ public class OAuth2ServerConfig {
                     .withClient("client_2")
                     .secret("123456")
                     .authorizedGrantTypes("authorization_code")
-                    .scopes("user_info")
+                    .scopes("select")
                     .autoApprove(true);
                   
         }
@@ -46,7 +48,7 @@ public class OAuth2ServerConfig {
       
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints
-                    .tokenStore(new RedisTokenStore(redisConnectionFactory))
+                    .tokenStore(getTokenStore())
                     .authenticationManager(authenticationManager);
                      
         }
@@ -56,6 +58,10 @@ public class OAuth2ServerConfig {
                     .tokenKeyAccess("permitAll()")
                     .checkTokenAccess("isAuthenticated()")
                     .allowFormAuthenticationForClients();
+        }
+        @Bean
+        public TokenStore getTokenStore() {
+        	return new RedisTokenStore(redisConnectionFactory);
         }
     }
 

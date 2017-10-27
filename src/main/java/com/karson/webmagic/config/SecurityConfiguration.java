@@ -14,16 +14,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     private UserDetailsService userDetailsService;
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-	    http.requestMatchers()
-    //    .antMatchers("/oauth/**","/login")
-	    .antMatchers("/login", "/oauth/authorize")
-        .and()
-        .authorizeRequests()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .formLogin()
-        .permitAll();
+		   http.requestMatchers() 
+			    .antMatchers("/login", "/oauth/authorize","/bower_components/**",
+		                   "/build/**",
+		                   "/customize/**",
+		                   "/dist/**",
+		                   "/documentation/**",
+		                   "/upload/**",
+		                   "/plugins/**")
+		        .and()
+		        .authorizeRequests().antMatchers("/bower_components/**",
+		                   "/build/**",
+		                   "/customize/**",
+		                   "/dist/**",
+		                   "/documentation/**",
+		                   "/upload/**",
+		                   "/plugins/**"
+		               ).permitAll()
+		        .anyRequest()
+		        .authenticated()
+		        .and()
+		        .formLogin().loginPage("/login")// 登录url请求路径 (3)
+                .defaultSuccessUrl("/home").permitAll().and() // 登录成功跳转路径url(4)
+                .logout().permitAll();
 	}
 	 @Override
 	    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
