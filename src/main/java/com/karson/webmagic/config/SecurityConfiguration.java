@@ -14,6 +14,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     private UserDetailsService userDetailsService;
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable();
 		   http.requestMatchers() 
 			    .antMatchers("/login", "/oauth/authorize","/bower_components/**",
 		                   "/build/**",

@@ -39,7 +39,7 @@ public class  UserDetailService implements UserDetailsService {
 	        boolean accountNonExpired = true;  
 	        boolean credentialsNonExpired = true;  
 	        boolean accountNonLocked = geOperator.getCanuse()==1;  	  
-	        UserDetails userdetails = new User(username, geOperator.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuths);  
+	        UserDetails userdetails = new User(geOperator.getId(), geOperator.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuths);  
 	                   
 	        return userdetails;  
 
